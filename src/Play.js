@@ -157,5 +157,5 @@ Try to implement at least 3/4 of the following features during the remainder of 
 [DONE] Add ball reset logic on successful shot
 [ ] Improve shot logic by making pointer’s relative x-position shoot the ball in correct x-direction
 [DONE] Make one obstacle move left/right and bounce against screen edges
-[ ] Create and display shot counter, score, and successful shot percentage
+[DONE] Create and display shot counter, score, and successful shot percentage
 */
