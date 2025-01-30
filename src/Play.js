@@ -5,7 +5,8 @@ class Play extends Phaser.Scene {
 
     init() {
         // useful variables
-        this.SHOT_VELOCITY_X = 200;
+        this.SHOT_VELOCITY_X_MIN = 300;
+        this.SHOT_VELOCITY_X_MAX = 300;
         this.SHOT_VELOCITY_Y_MIN = 700;
         this.SHOT_VELOCITY_Y_MAX = 1100;
         this.wall_velocity = 200;
@@ -78,10 +79,16 @@ class Play extends Phaser.Scene {
         this.oneWay.body.checkCollision.down = false;
         // add pointer input
         this.input.on("pointerdown", (pointer) => {
-            let shotDirection = pointer.y <= this.ball.y ? 1 : -1;
+            console.log("X: " + pointer.x + " Y: " + pointer.y);
+            let shotDirection = pointer.x <= this.ball.x ? -1 : 1;
+
             this.ball.body.setVelocityX(
-                Phaser.Math.Between(-this.SHOT_VELOCITY_X, this.SHOT_VELOCITY_X)
+                Phaser.Math.Between(
+                    this.SHOT_VELOCITY_X_MIN,
+                    this.SHOT_VELOCITY_X_MAX
+                ) * shotDirection
             );
+            shotDirection = pointer.y <= this.ball.y ? -1 : 1;
             this.ball.body.setVelocityY(
                 Phaser.Math.Between(
                     this.SHOT_VELOCITY_Y_MIN,
@@ -98,6 +105,7 @@ class Play extends Phaser.Scene {
             // ball.destroy();
             // reset ball after scoring
             this.ball.setPosition(width / 2, height - height / 10);
+            this.ball.setVelocity(0, 0);
             this.score += 1;
             this.score_txt.text = "score: " + this.score;
             this.percent_txt.text =
@@ -155,7 +163,7 @@ class Play extends Phaser.Scene {
 CODE CHALLENGE
 Try to implement at least 3/4 of the following features during the remainder of class (hint: each takes roughly 15 or fewer lines of code to implement):
 [DONE] Add ball reset logic on successful shot
-[ ] Improve shot logic by making pointer’s relative x-position shoot the ball in correct x-direction
+[DONE] Improve shot logic by making pointer’s relative x-position shoot the ball in correct x-direction
 [DONE] Make one obstacle move left/right and bounce against screen edges
 [DONE] Create and display shot counter, score, and successful shot percentage
 */
